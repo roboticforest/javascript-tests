@@ -45,6 +45,10 @@ function scope_tests() {
     // console.log(blockFourData);  // ReferenceError: blockFourData is not defined
 }
 
+// NOTE: Unintended test.
+// Node.js (and probably other JS engines) don't throw any errors for code flawed code nt executed!
+// If you comment out the following call to scope_tests and uncomment the console logging lines
+// within it, node will not crash. I guess, such is the life outside of a compiled language?
 scope_tests();
 
 console.log("From within global scope:");
