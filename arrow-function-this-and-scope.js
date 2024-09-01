@@ -72,14 +72,39 @@ const testObject = {
     testData: "Inner Scope"
 };
 
-// This doesn't work. You can't apply functions like these to object literals. ... But, why not?
 // console.log(testObject.free_function()); // TypeError: testObject.free_function is not a function at Object.<anonymous>
 // console.log(testObject.free_arrow()); // TypeError: testObject.free_arrow is not a function at Object.<anonymous>
 
+function RealObject () {
+    this.testData = "Real Object";
+}
+realObject = new RealObject();
+// realObject.free_function(); // TypeError: realObject.free_function is not a function at Object.<anonymous>
+// realObject.free_arrow(); // TypeError: realObject.free_arrow is not a function at Object.<anonymous>
+
+testObject.traditional_function = free_function;
+testObject.arrow_function = free_arrow;
+realObject.traditional_function = free_function;
+realObject.arrow_function = free_arrow;
+
+console.log("----- Assignment of Functions Test");
+console.log(testObject.traditional_function()); // Prints: "Inner Scope"
+console.log(testObject.arrow_function());       // Prints: "Outer Scope"
+console.log(realObject.traditional_function()); // Prints: "Real Object"
+console.log(realObject.arrow_function());       // Prints: "Outer Scope"
+
 /**
  * How JS handles objects is weird coming from a background in C++, Java, and Python. `this` appears to have nothing
- * to do with objects (or at least, object literals), and everything to do with functions.
+ * to do with objects (or at least, object literals), and everything to do with functions. Does each traditional
+ * function get its own `this` variable? Not exactly.
  * 
- * Does each traditional function get its own `this` variable? That would explain a lot about constructor functions.
+ * The way `this` is handled clouds scope a little bit. Digging deeper it initially appears JS has 2 different kinds
+ * of "objects". The first is object literals, a basic POD dictionary similar to a Python object. The next kind is
+ * that created using a constructor function which contains a "this context" given to it by the `new` keyword. I think
+ * only traditional functions can be constructor functions, and only because `new` is used during their call. More
+ * testing needed there too.
+ * 
+ * `this` is a variable that either gets *assigned* to an object or not. It's not inherently part of an object.
+ * I think, under the hood, object literals and the pieced together objects of constructor functions are mostly (if
+ * not exactly) the same thing, the key difference is whether a `this` variable has been created/assigned to that it.
  */
-
