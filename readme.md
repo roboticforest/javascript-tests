@@ -18,6 +18,8 @@ The easiest way to run these tests is with Node.js. Clone the repo and run any s
 node filename.js
 ```
 
+The real value is in reading the code and comments though.
+
 ## Contributions
 
 Have suggestions or improvements? Fork the repo and submit a pull request!
