@@ -1,2 +1,3 @@
-# Ignore ghostwriter markdown editor backup files.
+.idea/
+*.bak
 *.backup
